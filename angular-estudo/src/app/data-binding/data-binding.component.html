@@ -1,0 +1,95 @@
+<section class="property-binding">
+
+  <article>
+
+    <h3>Interpolation</h3>
+    <p>String renderizada com interpolação: {{ url }}</p>
+    <p>O resultado de 1 + 1 é: {{ 1 + 1 }} </p>
+    <p>O resultado de 1 + 1 não é: {{ 1 + 1 + getValor()}} </p>
+    <img src="{{ urlImagem }}">
+    <img [src]=" urlImagem ">
+
+  </article>
+
+  <article>
+    <h3>Class & Style Binding</h3>
+    <select  #classe (change)="0">
+      <option value="alert-success">Sucesso</option>
+      <option value="alert-info">Info</option>
+      <option value="alert-warning">Warning</option>
+      <option value="alert-danger">Danger</option>
+    </select>
+    <br><br>
+
+    <div class="alert {{ classe.value }}" role="alert">
+      Texto colorido conforme valor do combobox
+    </div>
+
+    <div class="alert" role="alert" [class.alert-success] = "classe.value == 'alert-success'">
+      A simple primary alert—check it out!
+    </div>
+
+    <div class="alert" role="alert" [class.alert-info] = "classe.value == 'alert-info'">
+      A simple primary alert—check it out!
+    </div>
+
+    <div class="alert" role="alert" [class.alert-warning] = "classe.value == 'alert-warning'">
+      A simple primary alert—check it out!
+    </div>
+
+    <div class="alert" role="alert" [class.alert-danger] = "classe.value == 'alert-danger'">
+      A simple primary alert—check it out!
+    </div>
+
+    <div class="alert alert-danger" role="alert" [style.display]="classe.value == 'alert-danger' ? 'block' : 'none'">
+      A simple primary alert—check it out!
+    </div>
+  </article>
+
+  <article>
+    <h3>Event Binding</h3>
+
+    <div>
+      <button (click)="botaoClicado()"  class="btn btn-primary">Me Clique!</button>
+      <br><br>
+
+      <input type="text" (keyup)="onKeyUp($event)" (keyup.enter)="salvarValor(campoInput.value)" #campoInput>
+      <p>Valor atual: {{ valorAtual }}</p>
+      <p>Valor salvo: {{ valorSalvo }}</p>
+      <br>
+
+      <span
+        (mouseover)="onMouseOverOut()"
+        (mouseout)="onMouseOverOut()"
+        [class.highlight]="isMouseOver">
+        Passe o mouse sobre mim</span>
+
+      <input type="text"
+        [value]="nome"
+        (input)="nome = nameInput.value" #nameInput/>
+
+      <input type="text"
+        [ngModel]="nome"
+        (ngModelChange)="nome = $event"/>
+
+      <input type="text" [(ngModel)]="nome">
+
+
+      <br>
+
+      <p>Meu nome é {{ pessoa.nome }} e tenho {{ pessoa.idade }} anos </p>
+      <input type="text" [(ngModel)] = "pessoa.nome">
+      <input type="text" [(ngModel)] = "pessoa.idade">
+
+
+    </div>
+  </article>
+
+  <article>
+    <h3>Input/Output Properties</h3>
+
+    <app-curso [nome]="nomeDoCurso"></app-curso>
+    <contador [valor]="10"
+      (mudouValor)="onMudouValor($event)"></contador>
+  </article>
+</section>

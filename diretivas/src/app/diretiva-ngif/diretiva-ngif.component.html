@@ -1,0 +1,11 @@
+<h5>*ngIf</h5>
+
+<div *ngIf="cursos.length > 0">
+  Lista de cursos aqui
+</div>
+
+
+<h5>hidden como alternativa</h5>
+<div [hidden]="cursos.length == 0">
+  Lista de cursos aqui
+</div>
