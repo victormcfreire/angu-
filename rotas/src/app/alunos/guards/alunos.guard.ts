@@ -9,12 +9,11 @@ export class AlunosGuard implements CanActivateChild {
     state: RouterStateSnapshot
   ): boolean | Observable<boolean> | Promise<boolean> {
 
-    console.log(childRoute);
-    console.log(state);
+    console.log('AlunosGuard: Guarda de rota filha');
 
     if(state.url.includes('/editar')){
-      alert('Usuário sem permissão');
-      return false;
+      //alert('Usuário sem permissão');
+      //return false;
     }
     return true;
   }

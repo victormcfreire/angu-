@@ -1,6 +1,5 @@
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from '@angular/router';
-import { AlunosGuard } from "./guards/alunos.guard";
 
 import { AuthGuard } from "./guards/auth.guard";
 import { CursosGuard } from "./guards/cursos.guard";
