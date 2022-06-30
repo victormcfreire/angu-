@@ -16,10 +16,16 @@ export class TemplateFormComponent implements OnInit {
 
   constructor(private _http: HttpClient) { }
 
-  onSubmit(form: any) {
-    this._http.post('https://httpbin.org/post', JSON.stringify(form.value))
+  onSubmit(formulario: any) {
+    this._http.post('https://httpbin.org/post', JSON.stringify(formulario.value))
       .pipe(map(res => res))
-      .subscribe(dados => console.log(dados));
+      .subscribe({
+        next: (dados => {
+          console.log(dados)
+          formulario.form.reset();
+        }),
+        error: ((error: any) => alert('erro'))
+      });
   }
 
   consultaCep(cep: any, form: any) {
