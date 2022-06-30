@@ -6,7 +6,7 @@
 
     <div>
       <input type="text" class="form-control" formControlName="nome" id="nome" placeholder="Nome"
-      [ngClass]="aplicaCssError('nome')">
+        [ngClass]="aplicaCssError('nome')">
       <small class="invalid-feedback">O nome é obritatório</small>
     </div>
   </div>
@@ -17,8 +17,8 @@
     </div>
 
     <div>
-      <input type="email" class="form-control" formControlName="email" id="email"
-        placeholder="nome@email.com" [ngClass]="aplicaCssError('email')">
+      <input type="email" class="form-control" formControlName="email" id="email" placeholder="nome@email.com"
+        [ngClass]="aplicaCssError('email')">
       <small class="invalid-feedback">Forneça um email válido</small>
     </div>
   </div>
@@ -28,7 +28,7 @@
       <div class="col-md-3">
         <label for="cep" class="control-label">CEP</label>
         <input type="text" class="form-control" formControlName="cep" id="cep"
-          [ngClass]="aplicaCssError('endereco.cep')">
+          [ngClass]="aplicaCssError('endereco.cep')" (blur)="consultaCep()">
         <small class="invalid-feedback">Forneça um CEP válido</small>
 
       </div>
@@ -75,21 +75,38 @@
       </div>
       <div class="col-md-3">
         <label for="estado" class="control-label">Estado</label>
-        <input type="text" class="form-control" formControlName="estado" id="estado"
+        <select type="text" class="form-control" formControlName="estado" id="estado"
           [ngClass]="aplicaCssError('endereco.estado')">
+          <option *ngFor="let estado of estados" [value]="estado.sigla"> {{ estado.nome }} </option>
+        </select>
         <small class="invalid-feedback">O Estado é obrigatório</small>
       </div>
+    </div>
+  </div>
+
+  <div class="form-row form-group">
+    <div class="col-md-3">
+      <label for="cargo" class="control-label">Cargo</label>
+      <select type="text" class="form-control" formControlName="cargo" id="cargo"
+        [ngClass]="aplicaCssError('cargo')" [compareWith]="compararCargos">
+        <option *ngFor="let cargo of cargos" [ngValue]="cargo"> {{ cargo.desc }} </option>
+      </select>
     </div>
   </div>
 
   <button type="submit" class="btn btn-primary" style="margin-top: 15px;">
     Submit
   </button>
-  <button type="button" class="btn btn-secondary" style="margin-top: 15px; margin-left: 10px;"
+  <button type="button" class="btn btn-secondary"
+    style="margin-top: 15px; margin-left: 10px;"
     (click)="resetar()">
     Cancelar
+  </button>
+  <button type="button" class="btn btn-secondary"
+    style="margin-top: 15px; margin-left: 10px;"
+    (click)="setarCargo()">
+    Cargo
   </button>
 </form>
 
 <app-form-debug [form]="formulario"></app-form-debug>
-

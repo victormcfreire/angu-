@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { ConsultaCepService } from '../shared/services/consulta-cep.service';
 
 @Component({
   selector: 'app-template-form',
@@ -14,7 +15,10 @@ export class TemplateFormComponent implements OnInit {
     email: null
   }
 
-  constructor(private _http: HttpClient) { }
+  constructor(
+    private _http: HttpClient,
+    private _cepService: ConsultaCepService
+  ) { }
 
   onSubmit(formulario: any) {
     this._http.post('https://httpbin.org/post', JSON.stringify(formulario.value))
@@ -32,19 +36,9 @@ export class TemplateFormComponent implements OnInit {
     //Nova variável "cep" somente com dígitos.
     cep = cep.replace(/\D/g, '');
 
-    if (cep != "") {
-      //Expressão regular para validar o CEP.
-      var validacep = /^[0-9]{8}$/;
-
-      //Valida o formato do CEP.
-      if (validacep.test(cep)) {
-
-        this.resetaDadosForm(form);
-
-        this._http.get(`//viacep.com.br/ws/${cep}/json/`)
-          .pipe(map((dados: any) => dados))
-          .subscribe(dados => this.populaDadosForm(dados, form));
-      }
+    if (cep != null && cep !== '') {
+      this._cepService.consultaCep(cep)?.pipe()
+        .subscribe(dados => this.populaDadosForm(dados, form));
     }
   }
 
