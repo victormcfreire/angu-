@@ -17,6 +17,8 @@ export class DataFormComponent implements OnInit {
   formulario!: FormGroup;
   estados!: EstadoBr[];
   cargos!: any[];
+  tecnologias!: any[];
+  newsletterOp!: any[];
   //estados!: Observable<EstadoBr>;
 
   constructor(
@@ -46,6 +48,9 @@ export class DataFormComponent implements OnInit {
       email: new FormControl(null),
     });*/
 
+    this.tecnologias = this._dropdownService.getTecnologias();
+    this.newsletterOp = this._dropdownService.getNewsletter();
+
     this.formulario = this._formBuilder.group({
       nome: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
@@ -59,7 +64,9 @@ export class DataFormComponent implements OnInit {
         estado: [null, Validators.required]
       }),
 
-      cargo: [null]
+      cargo: [null],
+      tecnologia: [null],
+      newsletter: ['s']
     });
 
   }
