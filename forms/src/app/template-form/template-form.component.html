@@ -31,7 +31,7 @@
         <label for="cep" class="control-label">CEP</label>
         <input type="text" class="form-control" name="cep" id="cep" ngModel
           [ngClass]="aplicaCssError(cep)" required
-          #cep="ngModel" (blur)="consultaCep(cep.value)">
+          #cep="ngModel" (blur)="consultaCep(cep.value, f)">
         <small class="invalid-feedback">Forneça um CEP válido</small>
 
       </div>
@@ -58,7 +58,7 @@
 
       <div>
         <input type="text" class="form-control" name="rua" id="rua" [ngClass]="aplicaCssError(rua)"
-          [(ngModel)]="usuario.rua" required #rua="ngModel" readonly>
+          ngModel required #rua="ngModel" readonly>
         <small class="invalid-feedback">O rua é obritatório</small>
       </div>
     </div>
