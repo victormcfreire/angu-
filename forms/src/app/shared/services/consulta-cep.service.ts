@@ -17,9 +17,10 @@ consultaCep(cep: string) {
   if (cep != "") {
     //Expressão regular para validar o CEP.
     var validacep = /^[0-9]{8}$/;
+    var validacepTraco = /^[0-9]{5}-[0-9]{3}$/;
 
     //Valida o formato do CEP.
-    if (validacep.test(cep)) {
+    if (validacep.test(cep) || validacepTraco.test(cep)) {
       return this._http.get(`//viacep.com.br/ws/${cep}/json`);
     }
   }
