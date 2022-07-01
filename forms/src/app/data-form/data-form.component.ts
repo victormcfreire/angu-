@@ -2,10 +2,11 @@ import { EstadoBr } from './../shared/models/estado-br';
 import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { DropdownService } from '../shared/services/dropdown.service';
 import { ConsultaCepService } from '../shared/services/consulta-cep.service';
 import { Observable } from 'rxjs';
+import { FormValidations } from '../shared/form-validation';
 
 @Component({
   selector: 'app-data-form',
@@ -19,6 +20,8 @@ export class DataFormComponent implements OnInit {
   cargos!: any[];
   tecnologias!: any[];
   newsletterOp!: any[];
+
+  frameworks: string[] = ['Angular', 'React', 'Vue', 'Sencha'];
   //estados!: Observable<EstadoBr>;
 
   constructor(
@@ -37,7 +40,6 @@ export class DataFormComponent implements OnInit {
           {
             next: (dados => {
               this.estados = dados;
-              console.log(dados);
             })
           }
         );
@@ -54,8 +56,9 @@ export class DataFormComponent implements OnInit {
     this.formulario = this._formBuilder.group({
       nome: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
+      confirmarEmail: [null, FormValidations.equalsTo('email')],
       endereco: this._formBuilder.group({
-        cep: [null, Validators.required],
+        cep: [null, [Validators.required, FormValidations.cepValidator]],
         numero: [null, Validators.required],
         complemento: [null],
         rua: [null, Validators.required],
@@ -66,16 +69,41 @@ export class DataFormComponent implements OnInit {
 
       cargo: [null],
       tecnologia: [null],
-      newsletter: ['s']
+      newsletter: ['s'],
+      termos: [null, Validators.pattern('true')],
+      frameworks: this.buildFrameworks()
     });
 
+    console.log(this.formulario.controls);
+
+  }
+
+  buildFrameworks(){
+    var valuesobj =  this.frameworks.map(obj => {return obj} );
+
+    const values = valuesobj.map(v => new FormControl(false));
+
+    return this._formBuilder.array(values, FormValidations.requiredMinCheckbox(1));
+
+  }
+
+  getFrameworksControls() {
+    return this.formulario.get('frameworks') ? (<FormArray>this.formulario.get('frameworks')).controls : null;
   }
 
   onSubmit() {
     console.log(this.formulario);
 
+    let valueSubmit = Object.assign({}, this.formulario.value);
+
+    valueSubmit = Object.assign(valueSubmit, {
+      frameworks: valueSubmit.frameworks
+        .map((v:any , i:any) => v ? this.frameworks[i] : null)
+        .filter((v:any) => v!== null )
+    });
+
     if (this.formulario.valid) {
-      this._http.post('https://httpbin.org/post', JSON.stringify(this.formulario.value))
+      this._http.post('https://httpbin.org/post', JSON.stringify(valueSubmit))
         .pipe(map(res => res))
         .subscribe({
           next: (dados => {

@@ -23,6 +23,18 @@
     </div>
   </div>
 
+  <div class="form-group">
+    <div>
+      <label for="confirmarEmail" class="control-label">Confirmar Email</label>
+    </div>
+
+    <div>
+      <input type="email" class="form-control" formControlName="confirmarEmail" id="confirmarEmail" placeholder="nome@email.com"
+        [ngClass]="aplicaCssError('confirmarEmail')">
+      <small class="invalid-feedback" *ngIf="formulario.get('confirmarEmail')?.hasError('equalsTo')">Os emails não correspondem</small>
+    </div>
+  </div>
+
   <div formGroupName="endereco">
     <div class="form-row form-group">
       <div class="col-md-3">
@@ -54,7 +66,7 @@
       <div>
         <input type="text" class="form-control" formControlName="rua" id="rua"
           [ngClass]="aplicaCssError('endereco.rua')">
-        <small class="invalid-feedback">O rua é obritatório</small>
+        <small class="invalid-feedback">A rua é obritatório</small>
       </div>
     </div>
 
@@ -108,6 +120,36 @@
           <input class="form-check-input" type="radio" [id]="item.id" [value]="item.valor" formControlName="newsletter">
           <label class="form-check-label" [for]="item.id"> {{ item.desc }} </label>
         </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="form-row form-group">
+    <div class="col-md-3">
+      <div class="checkbox">
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" id="check1" formControlName="termos"
+            [ngClass]="aplicaCssError('termos')">
+          <label class="form-check-label" for="check1">
+            Aceito os termos.
+          </label>
+          <small class="invalid-feedback">Por favor, aceite os termos</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-8">
+      <label for="frameworksDiv">Frameworks</label>
+      <div class="row" id="frameworksDiv">
+        <div class="checkbox form-check" [ngClass]="aplicaCssError('frameworks')" formArrayName="frameworks"
+          *ngFor="let item of getFrameworksControls(); let i = index;">
+          <input class="form-check-input" type="checkbox" id="fw {{i}}" [formControlName]="i">
+          <label class="form-check-label" for="fw {{i}}">
+            {{ frameworks[i] }}
+          </label>
+        </div>
+        <small class="invalid-feedback">Selecione pelo menos 1 framework</small>
       </div>
     </div>
 
