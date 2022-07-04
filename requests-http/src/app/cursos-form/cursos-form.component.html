@@ -12,7 +12,7 @@
       />
       <div *ngIf="hasError('nome')" class="invalid-feedback">
         <div *ngIf="form.controls['nome'].errors?.['required']">
-            Digitar Nome
+            Campo obrigatório
         </div>
         <div *ngIf="form.controls['nome'].errors?.['minlength']">
             No mínimo 3 caracteres
