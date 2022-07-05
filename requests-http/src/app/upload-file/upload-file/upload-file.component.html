@@ -24,7 +24,7 @@
     {{ progress }}%
   </div>
 </div>
-<div style="margin-top: 10px">
+<div style="margin-top: 10px; margin-bottom: 10px;">
   <button
     type="button"
     class="btn btn-primary"
@@ -34,3 +34,17 @@
     Enviar
   </button>
 </div>
+<button
+  type="button"
+  class="btn btn-primary"
+  (click)="onDownloadPdf()"
+>
+  Download PDF
+</button>
+<button
+  type="button"
+  class="btn btn-primary"
+  (click)="onDownloadExcel()"
+>
+  Download Excel
+</button>
