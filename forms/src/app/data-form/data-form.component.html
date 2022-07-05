@@ -90,10 +90,11 @@
       </div>
       <div class="col-md-4">
         <label for="cidade" class="control-label">Cidade</label>
-        <input type="text" class="form-control" formControlName="cidade" id="cidade"
+        <select type="text" class="form-control" formControlName="cidade" id="cidade"
           [ngClass]="aplicaCssError('endereco.cidade')">
-        <small class="invalid-feedback">A Cidade é obrigatória</small>
-
+          <option *ngFor="let cidade of cidades" [value]="cidade.nome"> {{ cidade.nome }} </option>
+        </select>
+        <small class="invalid-feedback">Selecione uma cidade</small>
       </div>
       <div class="col-md-3">
         <label for="estado" class="control-label">Estado</label>

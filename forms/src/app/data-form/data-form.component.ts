@@ -1,3 +1,4 @@
+import { Cidade } from './../shared/models/cidade';
 import { BaseFormComponent } from './../shared/base-form/base-form.component';
 import { VerificaEmailService } from './services/verifica-email.service';
 import { EstadoBr } from './../shared/models/estado-br';
@@ -22,6 +23,7 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
   cargos!: any[];
   tecnologias!: any[];
   newsletterOp!: any[];
+  cidades!: Cidade[];
 
   frameworks: string[] = ['Angular', 'React', 'Vue', 'Sencha'];
   //estados!: Observable<EstadoBr>;
@@ -90,6 +92,16 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
         : EMPTY)
       )
       .subscribe(dados => dados ? this.populaDadosForm(dados) : {});
+
+      this.formulario.get('endereco.estado')?.valueChanges
+        .pipe(
+          tap(estado => console.log('Novo estado: ' + estado )),
+          map(estado => this.estados.filter(e => e.sigla === estado)),
+          map(estados => estados && estados.length > 0 ? estados[0].id : EMPTY),
+          switchMap(estadoId => this._dropdownService.getCidades(Number(estadoId))),
+          tap(console.log)
+        )
+        .subscribe(cidades => this.cidades = cidades)
   }
 
 

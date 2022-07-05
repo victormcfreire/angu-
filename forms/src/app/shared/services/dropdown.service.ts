@@ -1,3 +1,4 @@
+import { Cidade } from './../models/cidade';
 import { EstadoBr } from './../models/estado-br';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -15,12 +16,18 @@ export class DropdownService {
     return this._http.get<EstadoBr[]>('assets/dados/estadosbr.json');
   }
 
+  getCidades(idEstado: number){
+    return this._http.get<Cidade[]>('assets/dados/cidadesbr.json')
+      .pipe(
+        map((cidades: Cidade[]) => cidades.filter(c => c.estado == idEstado))
+      );
+  }
+
   getCargos(){
     return [
       { nome: 'Dev', nivel: 'Junior', desc: 'Dev Jr' },
       { nome: 'Dev', nivel: 'Pleno', desc: 'Dev Pl' },
       { nome: 'Dev', nivel: 'Senior', desc: 'Dev Sr' }
-
     ];
   }
 
