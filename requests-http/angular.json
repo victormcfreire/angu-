@@ -94,7 +94,8 @@
               "browserTarget": "requests-http:build:production"
             },
             "development": {
-              "browserTarget": "requests-http:build:development"
+              "browserTarget": "requests-http:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"
