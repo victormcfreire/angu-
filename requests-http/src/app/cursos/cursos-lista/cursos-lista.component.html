@@ -4,12 +4,19 @@
       <h4>Cursos</h4>
     </div>
     <div class="float-right">
-      <button type="button" class="btn btn-primary" [routerLink]="['novo']">Novo Curso</button>
-      <button type="button" class="btn btn-secondary" (click)="onRefresh()">Atualizar</button>
+      <button type="button" class="btn btn-primary" [routerLink]="['novo']">
+        Novo Curso
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="onRefresh()">
+        Atualizar
+      </button>
     </div>
   </div>
   <div class="card-body">
-    <table class="table table-hover" *ngIf="cursos$| async as cursos; else loading">
+    <table
+      class="table table-hover"
+      *ngIf="cursos$ | async as cursos; else loading"
+    >
       <thead>
         <tr>
           <th>#</th>
@@ -19,15 +26,21 @@
       </thead>
       <tbody>
         <tr *ngFor="let curso of cursos">
-          <td> {{ curso.id }} </td>
-          <td> {{ curso.nome }} </td>
+          <td>{{ curso.id }}</td>
+          <td>{{ curso.nome }}</td>
           <td>
             <span class="float-right">
-              <button class="btn btn-outline-warning mb-1 btn-sm" (click)="onEdit(curso.id)">
+              <button
+                class="btn btn-outline-warning mb-1 btn-sm"
+                (click)="onEdit(curso.id)"
+              >
                 Atualizar
               </button>
 
-              <button class="btn btn-outline-danger mb-1 btn-sm">
+              <button
+                class="btn btn-outline-danger mb-1 btn-sm"
+                (click)="onDelete(curso)"
+              >
                 Remover
               </button>
             </span>
@@ -41,3 +54,15 @@
     </ng-template>
   </div>
 </div>
+
+<ng-template #deleteModal>
+  <div class="modal-body text-center">
+    <p>Deseja mesmo deletar o registro?</p>
+    <button type="button" class="btn btn-default" (click)="onConfirmDelete()">
+      Sim
+    </button>
+    <button type="button" class="btn btn-primary" (click)="onDeclineDelete()">
+      Não
+    </button>
+  </div>
+</ng-template>

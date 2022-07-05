@@ -6,6 +6,7 @@ import { Location } from '@angular/common';
 import { CursosService } from './../cursos/cursos.service';
 import { AlertModelService } from './../shared/alert-model.service';
 import { map, switchMap } from 'rxjs';
+import { Cursos2Service } from '../cursos/cursos2.service';
 
 @Component({
   selector: 'app-cursos-form',
@@ -18,7 +19,7 @@ export class CursosFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private service: CursosService,
+    private service: Cursos2Service,
     private modal: AlertModelService,
     private location: Location,
     private _route: ActivatedRoute
